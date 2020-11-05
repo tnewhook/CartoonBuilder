@@ -1,0 +1,19 @@
+Change selected canvas by click
+  add thicker border to selected canvasClass (add class activePanel)
+
+if only one canvas left, set that one as the active one on deletion of the second canvas.
+add listeners to list items/buttons
+
+read through Fabric documentation
+
+drag, drop comic background images
+
+set canvas elements to flow (multiple canvases in row),
+set canvas max width,
+get toolbar list to float:right over canvas, within wrapper div
+-----------------------------------------------------
+add icons to toolbar
+add event handlers to toolbar icons
+  on icon click, create object in selected canvas (moveable)
+  add ability to snap text to window
+map 'delete' functionality to delete button
