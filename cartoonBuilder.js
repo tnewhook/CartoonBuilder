@@ -69,10 +69,15 @@ function buildToolbarList(toolbar, currentCanvas) {
 			//        console.log('elementObject',elementObject);
 			for (let aspect in elementObject) {
 				//console.log("aspect", elementObject[aspect].name);
-				var sublistItem = document.createElement('LI');
-				sublistText = document.createTextNode(elementObject[aspect].name);
-				sublistItem.appendChild(sublistText);
-				sublistItem.id = sublistText;
+				let sublistItem = document.createElement('LI');
+				let sublistText = document.createTextNode(elementObject[aspect].name);
+				let sublistImage = document.createElement('IMG');
+				sublistImage.src = 'images/' + element + '_bubble.svg';
+				sublistImage.className = element + 'Img';
+				sublistItem.id = elementObject[aspect].name;
+				//sublistItem.appendChild(sublistText);
+				sublistItem.appendChild(sublistImage);
+
 				toolbarSublist.appendChild(sublistItem);
 				listItem.appendChild(listText);
 				listItem.appendChild(toolbarSublist);
@@ -86,6 +91,11 @@ function buildToolbarList(toolbar, currentCanvas) {
 }
 
 function changeCurrentCanvas(toolbar, currentCanvas) {
+	var activeCanvas = document.getElementsByClassName("activeCanvas");
+	while (activeCanvas.length) {
+		activeCanvas[0].className = activeCanvas[0].className.replace(/\bactiveCanvas\b/g, "");
+	}
+
 	console.log('currentCanvas ccc1', currentCanvas);
 	let toolbarContainer = document.getElementById("ToolbarContainer");
 	console.log('toolbarContainer', toolbarContainer, 'typeof toolbarContainer', typeof(toolbarContainer));
@@ -93,6 +103,9 @@ function changeCurrentCanvas(toolbar, currentCanvas) {
 	if (toolbarContainer != null) {
 		toolbarContainer.remove();
 	}
+	currentCanvasWrapper = "canvasWrapper" + currentCanvas;
+	document.getElementById(currentCanvasWrapper).className += " 	activeCanvas";
+	console.log('currentCanvas', currentCanvas)
 	buildToolbarList(toolbar, currentCanvas);
 }
 
@@ -107,12 +120,20 @@ function createCanvas(CartoonWrapper, currentCanvas) {
 	canvasElement.className = "canvasClass";
 	canvasWrapper.appendChild(canvasElement);
 	document.getElementById("CartoonWrapper").appendChild(canvasWrapper);
+	canvasElement.addEventListener("click", function(e) {
+		currentCanvasID = e.target.id;
+		currentCanvas = currentCanvasID.replace('canvasElement', '');
+		changeCurrentCanvas(toolbar, currentCanvas);
+	});
 }
 
 function removeCanvas() {
 	console.log('removeCanvas');
-	let selectedCanvas = document.getElementById("canvasWrapper" + currentCanvas);
-	selectedCanvas.remove();
+	if (currentCanvas > 0) {
+		let selectedCanvas = document.getElementById("canvasWrapper" + currentCanvas);
+		selectedCanvas.remove();
+	}
+
 }
 
 function createCanvasStructure(cartoonWrapper) {
@@ -126,6 +147,7 @@ function createCanvasStructure(cartoonWrapper) {
 	subButton.textContent = "remove";
 	buttonWrapper.appendChild(addButton);
 	buttonWrapper.appendChild(subButton);
+	subButton.addEventListener("click", removeCanvas(currentCanvas));
 	cartoonWrapper.appendChild(buttonWrapper);
 	document.getElementById("addButton").addEventListener("click", createCanvas);
 	document.getElementById("subButton").addEventListener("click", removeCanvas);
@@ -141,4 +163,10 @@ function initializePage() {
 	changeCurrentCanvas(toolbar, currentCanvas);
 };
 
+
+
+
+
 initializePage();
+
+/**********Event listeners***************/

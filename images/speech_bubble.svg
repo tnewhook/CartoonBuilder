@@ -21,7 +21,7 @@
      inkscape:snap-to-guides="false"
      pagecolor="#ffffff"
      inkscape:snap-global="false"
-     inkscape:zoom="16"
+     inkscape:zoom="1.4142136"
      showgrid="false"
      borderopacity="1.0"
      inkscape:current-layer="layer1"
@@ -31,11 +31,11 @@
      inkscape:pageopacity="0.0"
      inkscape:document-units="px"
      inkscape:document-rotation="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1566"
+     inkscape:window-height="1030"
+     inkscape:window-x="-1"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0" />
   <g
      id="layer1"
      inkscape:label="Layer 1"
@@ -44,7 +44,7 @@
     <path
        id="path2816"
        style="opacity:0.64878;fill:none;stroke:#000000;stroke-width:2.96183"
-       d="m 185.72913,88.284974 c 0,13.205816 -14.12425,29.480166 -27.7804,38.134026 -0.90227,5.3141 -4.25663,14.65274 14.82148,40.8788 -11.79161,-1.42953 -39.0476,-26.87649 -41.36742,-32.90202 -4.91217,0.63706 -15.92359,1.71182 -21.13304,1.71182 -41.674542,0 -75.459372,-21.41157 -75.459372,-47.82322 0,-26.412621 30.990568,-47.12532 72.666092,-47.12532 41.67454,0 78.25266,20.713685 78.25266,47.12532 z"
+       d="m 34.810378,88.284974 c 0,13.205816 14.12425,29.480166 27.7804,38.134026 0.90227,5.3141 4.25663,14.65274 -14.82148,40.8788 11.79161,-1.42953 39.0476,-26.87649 41.36742,-32.90202 4.91217,0.63706 15.923592,1.71182 21.133042,1.71182 41.67454,0 75.45937,-21.41157 75.45937,-47.82322 0,-26.412621 -30.99057,-47.12532 -72.66609,-47.12532 -41.674542,0 -78.252662,20.713685 -78.252662,47.12532 z"
        inkscape:export-ydpi="90"
        sodipodi:nodetypes="ccccssscc"
        inkscape:export-filename="C:\Documents and Settings\jobrad\My Documents\My Pictures\Clipart\speech bubble.png"
