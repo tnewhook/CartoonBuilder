@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 22 20" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient id="b" x1="303.47" x2="303.56" y1="267.8" y2="248.16" gradientTransform="matrix(.56568 0 0 .94044 167.93 -61.249)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#808080" offset="0"/>
+   <stop stop-color="#b2b2b2" offset="1"/>
+  </linearGradient>
+  <linearGradient id="a" x1="301.15" x2="289.75" y1="176.16" y2="187.84" gradientTransform="matrix(0 -1 1 0 158.75 477.53)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#2f2f2f" offset="0"/>
+   <stop stop-color="#a9a9a9" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(-328.56 -171.03)">
+  <path d="m329.49574,171.53207h20.14264a.42857,.89061 0 0,1 .42857.89061v17.21855a.42857,.89061 0 0,1 -.42857.89061h-20.14264a.42857,.89061 0 0,1 -.42857-.89061v-17.21855a.42857,.89061 0 0,1 .42857-.89061" fill="#eee" stroke="url(#b)" stroke-width="1.0002"/>
+  <path d="m335.56 180h9v3h-9z" fill="#f8f8f8"/>
+  <path transform="rotate(-90)" d="m-186.05 338.59h9v3h-9z" fill="#f8f8f8"/>
+  <path d="m337.62 175.91v3h-3v3h3v3h3v-3h3v-3h-3v-3h-3z" fill="url(#a)"/>
+  <path d="m330.02 190.03 0.0335-17.5 19.531-0.0112" fill="none" stroke="#fff"/>
+  <path d="m349.06 173.03-2e-3 16.469-19.563 0.0112" fill="none" stroke="#cacaca"/>
+ </g>
+</svg>
