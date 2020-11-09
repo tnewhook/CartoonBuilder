@@ -1,0 +1,280 @@
+@mixin corner-radius($radius:0px,$corner) {
+  @if $radius != 0 and $corner== 'all' {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+  }
+
+  @if $radius !=0 and $corner== 'first' {
+    -webkit-border-radius: 3px 0 0 0;
+    -moz-border-radius: 3px 0 0 0;
+    border-radius: 3px 0 0 0;
+  }
+
+  @if $radius !=0 and corner== 'last' {
+    -webkit-border-radius: 0 0 0 3px;
+    -moz-border-radius: 0 0 0 3px;
+    border-radius: 0 0 0 3px;
+  }
+}
+@mixin sublist-transform($scaleType:'both',$scaleAmt:0) {
+  @if $scaleType== 'both' {
+    -moz-transform: scale($scaleAmt, $scaleAmt);
+    -o-transform: scale($scaleAmt, $scaleAmt);
+    -webkit-transform: scale($scaleAmt, $scaleAmt);
+    transform: scale($scaleAmt, $scaleAmt);
+  }
+
+  @if $scaleType== 'X' {
+    -moz-transform: scaleX($scaleAmt);
+    -o-transform: scaleX($scaleAmt);
+    -webkit-transform: scaleX($scaleAmt);
+    transform: scaleX($scaleAmt);
+  }
+
+  @if $scaleType== 'Y' {
+    -moz-transform: scaleY($scaleAmt);
+    -o-transform: scaleY($scaleAmt);
+    -webkit-transform: scaleY($scaleAmt);
+    transform: scaleY($scaleAmt);
+  }
+}
+
+.toolbarNavigation {
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  line-height: 1;
+  background: #fff;
+  font-family: 'roboto', Tahoma, Arial, sans-serif;
+  zoom: 1;
+  display: block;
+  float: left;
+  display: block;
+  width: 100%;
+
+  a {
+    display: block;
+    padding: 1em 1.3em;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  ul {
+    @include corner-radius(3px,all);
+    list-style: none;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1px solid black;
+    position: relative;
+    z-index: 500;
+    border: 1px solid black;
+    padding: 7px;
+
+    li {
+      float: left;
+      display: block;
+      min-height: 0.05em;
+      line-height: 1em;
+      vertical-align: middle;
+      position: relative;
+      margin-left: 0.5em;
+
+      li.hover,
+      li:hover {
+        position: relative;
+        z-index: 510;
+        cursor: default;
+      }
+
+      ul {
+        border: 1px solid #34A65F;
+        margin-top: 3em;
+        width: 20em;
+        background-color: white;
+        margin-left: -5em;
+
+        li {
+          float: left;
+          display: block;
+          margin-left: 0;
+          margin-right: 0.7em;
+          width: 4em;
+          padding: 2px;
+
+          &:hover {
+            background-color: purple;
+          }
+        }
+      }
+    }
+
+    li:hover {
+      > ul {
+        visibility: visible;
+        float: left;
+        display: block;
+        list-style: none;
+      }
+    }
+
+    li.has-sub {
+      > a:after {
+        content: '»';
+        position: absolute;
+        right: 1em;
+      }
+    }
+
+    ul {
+      @includecorner-radius: (
+        3px,
+        all
+      );
+      visibility: hidden;
+      position: absolute;
+      top: 100%;
+      z-index: 520;
+      width: auto;
+      float: left;
+      display: block;
+      top: 0;
+      left: 99%;
+      margin-top: 0.05em;
+      width: 5em;
+      margin-left: 1px;
+      border: 1px solid #34A65F;
+
+      a {
+        color: #ffffff;
+      }
+
+      li {
+        &:hover > a {
+          background: #4eb1ff;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  > ul {
+    float: left;
+    display: block;
+
+    > li {
+      > a {
+        border-right: 0.3em solid #34A65F;
+        color: #ffffff;
+      }
+
+      > a:hover {
+        color: #ffffff;
+        background: #34A65F;
+      }
+    }
+
+    > li:hover a {
+      background: #34A65F;
+    }
+  }
+
+  li {
+    position: relative;
+  }
+
+  .align-right {
+    float: right;
+
+    li {
+      text-align: right;
+    }
+
+    ul {
+      li.has-sub > a:before {
+        content: '+';
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        margin-top: -6px;
+      }
+
+      li.has-sub > a:after {
+        content: none;
+      }
+
+      ul {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        z-index: 598;
+        width: auto;
+        @include corner-radius(3px,all);
+
+        li.first {
+          @include corner-radius(3px, first);
+          list-style: none;
+        }
+
+        li.last {
+          @include corner-radius(3px, first);
+        }
+      }
+    }
+
+    > ul {
+      > li {
+        > a {
+          border-left: 0.3em solid #34A65F;
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    float: left;
+  }
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+/*thought, speech roting classes*/
+
+#tlSpeech,
+#tlThought {
+  @include sublist-transform('Y',-1)
+}
+
+#blSpeech,
+#blThought {
+  @include sublist-transform('X',-1)
+}
+
+#trSpeech,
+#trThought {
+  @include sublist-transform('all',-1)
+}
+
+.listImg,
+.speechImg,
+.thoughtImg {
+  display: block;
+  float: left;
+  width: 4em;
+  padding-left: 0.5 em;
+  height: 3em;
+}
+
+.canvasClass {
+  width: 100%;
+}
