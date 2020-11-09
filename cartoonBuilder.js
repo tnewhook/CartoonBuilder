@@ -117,6 +117,7 @@ function buildToolbarList(toolbar) {
 
 			var toolbarSublist = document.createElement('UL');
 			toolbarSublist.id = element + "ToolbarSublist";
+			toolbarSublist.className = "ToolbarSublist";
 			var elementObject = toolbar[element];
 			for (let aspect in elementObject) {
 				let sublistItem = document.createElement('LI');
@@ -128,9 +129,11 @@ function buildToolbarList(toolbar) {
 				sublistImg.alt = elementObject[aspect].altText;
 				sublistItem.addEventListener("click", element.action);
 				sublistItem.appendChild(sublistImg);
-				toolbarSublist.appendChild(sublistItem);
+				if (typeof(elementObject[aspect].altText) == 'string') {
+					toolbarSublist.appendChild(sublistItem);
+				}
+				//				console.log('elementObject[aspect].altText' + typeof(elementObject[aspect].altText));
 
-				//				listItem.appendChild(listText);
 				listItem.appendChild(toolbarSublist);
 				toolbarList.appendChild(listItem);
 			}

@@ -1,0 +1,270 @@
+.toolbarNavigation {
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  line-height: 1;
+  background: #fff;
+  font-family: 'roboto', Tahoma, Arial, sans-serif;
+  zoom: 1;
+  display: block;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  float: left;
+  display: block;
+  width: 100%;
+
+  a {
+    display: block;
+    padding: 1em 1.3em;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  ul {
+    list-style: none;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1px solid black;
+    position: relative;
+    z-index: 500;
+    border: 1px solid black;
+    padding: 7px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+
+    li {
+      float: left;
+      display: block;
+      min-height: 0.05em;
+      line-height: 1em;
+      vertical-align: middle;
+      position: relative;
+      margin-left: 0.5em;
+
+      li.hover,
+      li:hover {
+        position: relative;
+        z-index: 510;
+        cursor: default;
+      }
+
+      ul {
+        border: 1px solid #34A65F;
+        margin-top: 3em;
+        width: 20em;
+        background-color: white;
+        margin-left: -5em;
+
+        li {
+          float: left;
+          display: block;
+          margin-left: 0;
+          margin-right: 0.7em;
+          width: 4em;
+          padding: 2px;
+        }
+
+        li:hover {
+          background-color: purple;
+        }
+      }
+    }
+
+    li:hover {
+      > ul {
+        visibility: visible;
+        float: left;
+        display: block;
+        list-style: none;
+      }
+    }
+
+    li.has-sub {
+      > a:after {
+        content: '»';
+        position: absolute;
+        right: 1em;
+      }
+    }
+
+    ul {
+      visibility: hidden;
+      position: absolute;
+      top: 100%;
+      z-index: 520;
+      width: auto;
+      float: left;
+      display: block;
+      top: 0;
+      left: 99%;
+      margin-top: 0.05em;
+      width: 5em;
+      margin-left: 1px;
+      border: 1px solid #34A65F;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+
+      a {
+        color: #ffffff;
+      }
+
+      a:hover {
+        color: #ffffff;
+      }
+
+      li:hover > a {
+        background: #4eb1ff;
+        color: #ffffff;
+      }
+    }
+  }
+
+  > ul {
+    float: left;
+    display: block;
+
+    > li {
+      > a {
+        border-right: 0.3em solid #34A65F;
+        color: #ffffff;
+      }
+
+      > a:hover {
+        color: #ffffff;
+        background: #34A65F;
+      }
+    }
+
+    > li:hover a {
+      background: #34A65F;
+    }
+  }
+
+  li {
+    position: relative;
+  }
+
+  .align-right {
+    float: right;
+
+    li {
+      text-align: right;
+    }
+
+    ul {
+      li.has-sub > a:before {
+        content: '+';
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        margin-top: -6px;
+      }
+
+      li.has-sub > a:after {
+        content: none;
+      }
+
+      ul {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        z-index: 598;
+        width: auto;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+
+        li.first {
+          -webkit-border-radius: 3px 0 0 0;
+          -moz-border-radius: 3px 0 0 0;
+          border-radius: 3px 0 0 0;
+        }
+
+        li.last {
+          -webkit-border-radius: 0 0 0 3px;
+          -moz-border-radius: 0 0 0 3px;
+          border-radius: 0 0 0 3px;
+        }
+      }
+    }
+
+    > ul {
+      > li {
+        > a {
+          border-left: 0.3em solid #34A65F;
+          border-right: none;
+        }
+      }
+    }
+  }
+}
+
+.toolbarNavigation:before {
+  content: '';
+  display: block;
+  float: left;
+}
+
+.toolbarNavigation:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.canvasClass {
+  width: 100%;
+}
+
+.listImg,
+.speechImg,
+.thoughtImg {
+  display: block;
+  float: left;
+  width: 4em;
+  padding-left: 0.5 em;
+  height: 3em;
+}
+
+.canvasWrapperClass {
+  border: 1px solid green;
+  margin: 4px;
+  float: left;
+  width: 40em;
+}
+/*thought, speech roting classes*/
+
+#tlSpeech,
+#tlThought {
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+}
+
+#blSpeech,
+#blThought {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+#trSpeech,
+#trThought {
+  -moz-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  transform: scale(-1, -1);
+}
+
+div.activeCanvas {
+  border: 5px solid black;
+  margin: 0;
+}
