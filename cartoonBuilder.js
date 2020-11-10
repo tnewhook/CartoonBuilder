@@ -5,37 +5,36 @@ var cartoonStrip = []; //array of canvas objects
 var toolbar = {
     text: {
         name: "text",
-        action: "",
-        altText: "add some text"
+        action: "modifyCanvas",
+        altText: "add some text",
 
     },
     image: {
         name: "image",
-        action: "",
-        altText: "add an image"
+        action: "modifyCanvas",
+        altText: "add a background image",
     },
     thought: {
         altText: "add a thought bubble",
         tl: {
             name: "tlThought",
-            action: "",
-            altText: "add an thought bubble with the small bubbles toward the top left"
+            action: "modifyCanvas",
+            altText: "add an thought bubble with the small bubbles toward the top left",
         },
         tr: {
             name: "trThought",
-            action: "",
+            action: "modifyCanvas",
             altText: "add an thought bubble with the small bubbles toward the top right"
-
         },
         bl: {
             name: "blThought",
-            action: "",
+            action: "modifyCanvas",
             altText: "add an thought bubble with the small bubbles toward the bottom left"
 
         },
         br: {
             name: "brThought",
-            action: "",
+            action: "modifyCanvas",
             altText: "add an thought bubble with the small bubbles toward the bottom right"
 
         }
@@ -44,51 +43,56 @@ var toolbar = {
         altText: "add a speech bubble",
         tl: {
             name: "tlSpeech",
-            action: "",
+            action: "modifyCanvas",
             altText: "add a speech bubble with the arrow toward the top left"
 
         },
         tr: {
             name: "trSpeech",
-            action: "",
+            action: "modifyCanvas",
             altText: "add a speech bubble with the arrow toward the top right"
 
         },
         bl: {
             name: "blSpeech",
-            action: "",
+            action: "modifyCanvas",
             altText: "add a speech bubble with the arrow toward the bottom left"
 
         },
         br: {
             name: "brSpeech",
-            action: "",
+            action: "modifyCanvas",
             altText: "add a speech bubble with the arrow toward the bottom right"
 
         }
     },
     add: {
         name: "add",
-        action: "addNewCanvas",
-        altText: "add a new comic panel"
-
+        action: "modifyCanvas",
+        altText: "add a new comic panel",
     },
     sub: {
         name: "sub",
-        action: "subCanvas",
-        altText: "remove selected comic panel"
+        action: "modifyCanvas",
+        altText: "remove selected comic panel",
     }
 };
 
 
 function buildToolbarList(toolbar) {
-    //get items from toolbar object, create wrapper, add images, add to wrapper
+    /*get items from toolbar object, create wrapper, add images, add to wrapper
+		add button actions to all buttons
+		creates list,adds items to listText
+		creates sublist items, add to sublist, add to list
+		*/
+
     var toolbarDiv, toolbarList, element, listItem, listText, listImg;
     toolbarDiv = this.document.createElement('div');
     toolbarDiv.id = "ToolbarContainer";
     toolbarDiv.className = "toolbarNavigation";
     toolbarList = this.document.createElement('UL');
     toolbarList.id = "ToolbarList";
+
     for (element in toolbar) {
         if (typeof (toolbar[element].name) !== "undefined") {
             listItem = document.createElement('LI');
@@ -96,14 +100,14 @@ function buildToolbarList(toolbar) {
             listItem.id = toolbar[element].name + "Tool";
             listImg = document.createElement('IMG');
             listImg.alt = toolbar[element].altText;
-            console.log('action', toolbar[element].action);
-            listItem.addEventListener("click", window[toolbar[element].action]);
+            let action = this[toolbar[element].action];
+            let name = toolbar[element].name;
+            listItem.addEventListener("click", function () {
+                action(name);
+            });
             listImg.src = 'images/' + toolbar[element].name + '.svg';
-            //listImg.className = element + 'Img';
             listImg.className += ' listImg';
             listItem.appendChild(listImg);
-
-            //			listItem.appendChild(listText);
             toolbarList.appendChild(listItem);
         } else if (typeof (toolbar[element] == 'object')) {
             var listItem = document.createElement('LI');
@@ -111,12 +115,8 @@ function buildToolbarList(toolbar) {
             listImg = document.createElement('IMG');
             listImg.src = 'images/' + element + '.svg';
             listImg.className += ' listImg';
-            listItem.addEventListener("click", element.action);
             listItem.appendChild(listImg);
-            console.log('alt', toolbar[element].altText);
             listImg.alt = toolbar[element].altText;
-            //listImg.setAttribute("alt", element.altText);
-
             var toolbarSublist = document.createElement('UL');
             toolbarSublist.id = element + "ToolbarSublist";
             toolbarSublist.className = "ToolbarSublist";
@@ -129,13 +129,18 @@ function buildToolbarList(toolbar) {
                 sublistImg.className = element + 'Img';
                 sublistItem.id = elementObject[aspect].name;
                 sublistImg.alt = elementObject[aspect].altText;
-                sublistItem.addEventListener("click", element.action);
+                if (elementObject[aspect].name && elementObject[aspect].altText) {
+
+                    let name = elementObject[aspect].name
+                    let action = window[toolbar[element][aspect].action];
+                    sublistItem.addEventListener("click", function () {
+                        action(name);
+                    });
+                }
                 sublistItem.appendChild(sublistImg);
                 if (typeof (elementObject[aspect].altText) == 'string') {
                     toolbarSublist.appendChild(sublistItem);
                 }
-                //				console.log('elementObject[aspect].altText' + typeof(elementObject[aspect].altText));
-
                 listItem.appendChild(toolbarSublist);
                 toolbarList.appendChild(listItem);
             }
@@ -158,7 +163,6 @@ class Canvas {
     }
 
     changeCurrentCanvas(toolbar, currentCanvas) {
-        console.log('change_currentCanvas', currentCanvas)
         var activeCanvas = document.getElementsByClassName("activeCanvas");
         while (activeCanvas.length) {
             activeCanvas[0].className = activeCanvas[0].className.replace(/\bactiveCanvas\b/g, "");
@@ -170,22 +174,17 @@ class Canvas {
     createCanvas = function (CartoonWrapper) {
         ++canvasCounter;
         currentCanvas = canvasCounter;
-        console.log('canvasCounter', canvasCounter);
-        console.log('currentCanvas', currentCanvas);
         let canvasWrapper = document.createElement('div');
         canvasWrapper.id = "canvasWrapper" + currentCanvas;
         canvasWrapper.className = "canvasWrapperClass";
         let canvasElement = document.createElement('canvas');
         canvasElement.id = "canvasElement" + currentCanvas;
-        console.log('canvasElement.id', canvasElement.id);
-
         canvasElement.className = "canvasClass";
         canvasWrapper.appendChild(canvasElement);
         document.getElementById("CartoonWrapper").appendChild(canvasWrapper);
         let currentCanvasInstance = this;
         canvasElement.addEventListener("click", function (e) {
             let currentCanvasID = e.target.id;
-            console.log('currentCanvasID', currentCanvasID);
             currentCanvas = currentCanvasID.replace('canvasElement', '');
             currentCanvasInstance.changeCurrentCanvas(toolbar, currentCanvas);
         });
@@ -193,19 +192,28 @@ class Canvas {
     }
 
     removeCanvas() {
-        console.log('removeCanvas');
-        console.log('currentCanvas to be removed', currentCanvas);
         if (currentCanvas > 0) {
             let selectedCanvas = document.getElementById("canvasWrapper" + currentCanvas);
             selectedCanvas.remove();
             --canvasCounter;
         }
     }
+
+    addBubble(bubbleType) {
+        console.log(bubbleType);
+    };
+
+    addBackImg(textString) {
+        console.log(textString);
+    };
+
+    addText(textString) {
+        console.log(textString);
+    };
 }
 
 function createCanvasStructure(cartoonWrapper) {
     let toolbarDiv = buildToolbarList(toolbar);
-    console.log('toolbarDiv', toolbarDiv);
     cartoonWrapper.appendChild(toolbarDiv);
 }
 
@@ -220,10 +228,32 @@ initializePage();
 
 /**********Event listeners***************/
 //necessary to link generic toolbar buttons to canvas instance currently active
-function addNewCanvas() {
-    cartoonStrip.push(new Canvas);
-}
 
-function subCanvas() {
-    cartoonStrip[currentCanvas - 1].removeCanvas();
+function modifyCanvas(changeType) {
+    switch (changeType) {
+    case 'add':
+        cartoonStrip.push(new Canvas);
+        break;
+    case 'sub':
+        cartoonStrip[currentCanvas - 1].removeCanvas();
+        break;
+    case 'text':
+        cartoonStrip[currentCanvas - 1].addText('SomeText');
+        break;
+    case 'image':
+        cartoonStrip[currentCanvas - 1].addBackImg('someBackImage');
+        break;
+    case 'tlThought':
+    case 'trThought':
+    case 'blThought':
+    case 'brThought':
+    case 'tlSpeech':
+    case 'trSpeech':
+    case 'blSpeech':
+    case 'brSpeech':
+        cartoonStrip[currentCanvas - 1].addBubble(changeType);
+        break;
+    default:
+
+    }
 }
