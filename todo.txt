@@ -4,7 +4,7 @@ DONE  if only one canvas left, set that one as the active one on deletion of the
       add listeners to list items/buttons
       read through Fabric documentation
       drag, drop comic background images
-        
+        if current background, replace current background
 
 DONE      set canvas elements to flow (multiple canvases in row),
       set canvas max width,

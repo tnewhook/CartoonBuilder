@@ -1,0 +1,31 @@
+{
+  "name": "cartoonbuilder",
+  "version": "1.0.0",
+  "description": "Cartoon Builder Node app",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cors-anywhere": "^0.4.3",
+    "epress": "0.0.1-security",
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.1",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.6",
+    "proxy-from-env": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnewhook/CartoonBuilder.git"
+  },
+  "author": "Trevor\tNewhook",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tnewhook/CartoonBuilder/issues"
+  },
+  "homepage": "https://github.com/tnewhook/CartoonBuilder#readme"
+}
