@@ -249,19 +249,21 @@
   }
 }
 /*thought, speech roting classes*/
-
 #tlSpeech,
 #tlThought {
   @include sublist-transform('Y',-1)
 }
 
-#blSpeech,
-#blThought {
+#trSpeech,
+#trThought {}
+
+#brSpeech,
+#brThought {
   @include sublist-transform('X',-1)
 }
 
-#trSpeech,
-#trThought {
+#blSpeech,
+#blThought {
   @include sublist-transform('all',-1)
 }
 

@@ -78,7 +78,6 @@ var toolbar = {
     }
 };
 
-
 function buildToolbarList(toolbar) {
     /*get items from toolbar object, create wrapper, add images, add to wrapper
     add button actions to all buttons
@@ -150,7 +149,6 @@ function buildToolbarList(toolbar) {
 
     return toolbarDiv;
 }
-
 /*
 Canvas class is prototype for canvas object. Contains functionality pointed to by toolbar items
 (add, remove canvas, add speech, thought shapes, text)
@@ -190,7 +188,7 @@ class Canvas {
         backImg = new fabric.Image();
 
         this.fabricCanvas = new fabric.Canvas(canvasElement, {
-            backgroundImage: 'images/bkgrnd.png',
+            //            backgroundImage: 'images/bkgrnd.png',
             height: 400,
             width: 600
         });
@@ -224,10 +222,48 @@ class Canvas {
     }
 
     addBubble(bubbleType) {
+        let dir, type, bubble, bubbleGroup;
         console.log(bubbleType);
+        dir = bubbleType.substring(0, 2);
+        type = bubbleType.substring(2);
+        bubble = fabric.loadSVGFromURL('/images/' + type + '.svg', function (objects, options) {
+            let bubbleGroup = fabric.util.groupSVGElements(objects, options);
+            if (dir == 'tl') {
+                bubbleGroup.set({
+                    flipY: true
+                })
+            } else if (dir == 'tr') {
+                bubbleGroup.set({
+
+                })
+            } else if (dir == 'br') {
+                bubbleGroup.set({
+                    flipX: true
+                })
+            } else if (dir == 'bl') {
+                bubbleGroup.set({
+                    flipY: true,
+                    flipX: true
+                })
+            }
+
+            bubbleGroup.set({
+                left: 100,
+                top: 100,
+            });
+            cartoonStrip[currentCanvas - 1].fabricCanvas.add(bubbleGroup).renderAll;
+        });
     };
     addText(textString) {
-        console.log(textString);
+        var iText = new fabric.IText('Type Here', {
+            left: 100,
+            top: 100,
+            padding: 7,
+        });
+        console.log('is iText added?');
+        cartoonStrip[currentCanvas - 1].fabricCanvas.add(iText);
+        //        cartoonStrip[currentCanvas - 1].fabricCanvas.renderAll();
+
     };
     /*///////////////////////////Functions for handling changing background images
     clicking the 'add image' button pulls up a file selector, which
@@ -273,32 +309,6 @@ class Canvas {
         }
     }
 
-    uploadImageFromURL(url) {
-        var img = new Image;
-        //var c = cartoonStrip[currentCanvas-1].fabricCanvas;
-        console.log('canvasID', cartoonStrip[currentCanvas - 1].fabricCanvas);
-
-        var c = cartoonStrip[currentCanvas - 1].fabricCanvas;
-        var ctx = c.getContext("2d");
-        //dig into https://github.com/Rob--W/cors-anywhere
-        img.onload = function () {
-            //            c.width = this.naturalWidth; // update canvas size to match image
-            //            c.height = this.naturalHeight;
-            ctx.drawImage(this, 0, 0); // draw in image
-            c.toBlob(function (blob) { // get content as PNG blob
-
-                // call our main function
-                handleFiles([blob]);
-
-            }, "image/png");
-        };
-        img.onerror = function () {
-            alert("Error in uploading");
-        }
-        img.crossOrigin = ""; // if from different origin
-        img.src = url;
-    }
-
     validateImage(image) {
         // check the type
         var validTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -321,36 +331,62 @@ class Canvas {
         console.log('previewImg', imgFile);
         console.log('currentCanvas', currentCanvas - 1);
         //cartoonStrip[currentCanvas - 1]);
-        console.log('typeof', typeof (imgFile), 'img', imgFile.name);
+        console.log('typeof', typeof (imgFile));
         let reader, data, bkImg;
         //TODO: FINISH ADDING UPLOADED/DRAGGED IMAGE TO DIV
         /////////////////////////////////////////////////////////////
-        if (typeof (imgFile) == 'object') {
+        if (typeof (imgFile) == 'object') { //For images dragged/uploaded from file system
             reader = new FileReader();
             reader.onload = function (f) {
                 data = f.target.result;
                 fabric.Image.fromURL(data, function (imgFile) {
-                    // add background image
-                    //       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
                     cartoonStrip[currentCanvas - 1].fabricCanvas.setBackgroundImage(imgFile, cartoonStrip[currentCanvas - 1].fabricCanvas.renderAll.bind(cartoonStrip[currentCanvas - 1].fabricCanvas), canvasInstance.determineBGParams(imgFile));
                 });
             };
             reader.readAsDataURL(imgFile);
-        } else if (typeof (imgFile) == 'string') {
-            cartoonStrip[currentCanvas - 1].fabricCanvas.setBackgroundImage(imgFile, cartoonStrip[currentCanvas - 1].fabricCanvas.renderAll.bind(cartoonStrip[currentCanvas - 1].fabricCanvas), canvasInstance.determineBGParams(imgFile));
+        } else if (typeof (imgFile) == 'string') { //for images dragged from another tab
+            fabric.Image.fromURL(imgFile, function (imgFile) {
+                cartoonStrip[currentCanvas - 1].fabricCanvas.setBackgroundImage(imgFile, cartoonStrip[currentCanvas - 1].fabricCanvas.renderAll.bind(cartoonStrip[currentCanvas - 1].fabricCanvas), canvasInstance.determineBGParams(imgFile));
+            });
         }
         cartoonStrip[currentCanvas - 1].fabricCanvas.renderAll();
         console.log('previewimg', cartoonStrip[currentCanvas - 1].fabricCanvas.backgroundImage);
     }
 
-    determineBGParams(imgFile) {
-        return '{}'
+    determineBGParams(bgImage) {
+        console.log('bgImage', bgImage);
+        let imgAspect = bgImage.width / bgImage.height,
+            w = bgImage.width,
+            h = bgImage.height,
+            left, top, scaleFactor = 0,
+            returnVal;
+        console.log('imgAspect', imgAspect);
+        if (imgAspect > 1) {
+            //Horizontal orientation
+            scaleFactor = 600 / bgImage.width
+            left = 0;
+            top = (400 - (bgImage.height * scaleFactor)) / 2
+
+        } else {
+            //Vertical orientation
+            scaleFactor = 400 / bgImage.height;
+            top = 0;
+            left = (600 - (bgImage.width * scaleFactor)) / 2;
+        }
+        //vertical orientation
+        returnVal = {
+            top: top,
+            left: left,
+            originX: 'left',
+            originY: 'top',
+            scaleX: scaleFactor,
+            scaleY: scaleFactor
+        };
+
+        console.log('return', returnVal);
+        return returnVal;
     }
-
-
 }
-
-
 
 function createCanvasStructure(cartoonWrapper) {
     let toolbarDiv = buildToolbarList(toolbar);
